@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>نظام إدخال الإحصائيات</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ شاشة الدخول ============ -->
+<div class="auth" id="authView">
+  <div class="box">
+    <h1>📊 نظام الإحصائيات</h1>
+    <p class="sub" id="authSub">سجّل الدخول للمتابعة</p>
+
+    <!-- تسجيل الدخول -->
+    <form id="loginPane" autocomplete="on">
+      <label>اسم المستخدم</label><input id="lUser" autocomplete="username" required>
+      <label>كلمة المرور</label><input id="lPass" type="password" autocomplete="current-password" required>
+      <button class="full" type="submit">دخول</button>
+      <div class="links">
+        <a id="goReset" class="hidden">نسيت كلمة المرور؟</a>
+        <a id="goSignup" class="hidden">إنشاء حساب جديد</a>
+      </div>
+    </form>
+
+    <!-- إعادة كلمة المرور (مخفية افتراضياً) -->
+    <form id="resetPane" class="hidden">
+      <label>اسم المستخدم</label><input id="rUser" required>
+      <label>كلمة الاسترجاع (التي حددتها عند التسجيل)</label><input id="rWord" required>
+      <label>كلمة المرور الجديدة</label><input id="rPass" type="password" minlength="4" required>
+      <button class="full" type="submit">تعيين كلمة المرور</button>
+      <div class="links"><a class="backLogin">← العودة لتسجيل الدخول</a></div>
+    </form>
+
+    <!-- حساب جديد (مخفي افتراضياً) -->
+    <form id="signupPane" class="hidden">
+      <label>اسم المستخدم</label><input id="sUser" autocomplete="username" required>
+      <label>كلمة المرور</label><input id="sPass" type="password" minlength="4" autocomplete="new-password" required>
+      <label>كلمة الاسترجاع (لاستعادة كلمة المرور)</label><input id="sWord" required>
+      <button class="full" type="submit">إنشاء الحساب</button>
+      <div class="links"><a class="backLogin">← العودة لتسجيل الدخول</a></div>
+    </form>
+
+    <div class="msg" id="authMsg"></div>
+    <p class="note" style="text-align:center">الحساب الافتراضي: admin / admin123</p>
+  </div>
+</div>
+
+<!-- ============ لوحة الإحصائيات ============ -->
+<div id="appView" class="hidden">
+  <header>
+    <h2>📊 نظام إدخال الإحصائيات</h2>
+    <div class="row"><span id="whoami" style="color:var(--mut);font-size:14px"></span>
+      <button class="sec" id="logoutBtn">خروج</button></div>
+  </header>
+  <div class="wrap">
+    <div class="cards">
+      <div class="stat"><small>عدد السجلات</small><b id="kCount">0</b></div>
+      <div class="stat"><small>المجموع</small><b id="kSum">0</b></div>
+      <div class="stat"><small>المتوسط</small><b id="kAvg">0</b></div>
+      <div class="stat"><small>أعلى قيمة</small><b id="kMax">0</b></div>
+    </div>
+
+    <div class="panel">
+      <h3>إدخال بيانات جديدة</h3>
+      <form id="entryForm" class="grid">
+        <div><label>التاريخ</label><input type="date" id="eDate" required></div>
+        <div><label>التصنيف</label><input id="eCat" list="cats" required><datalist id="cats"></datalist></div>
+        <div><label>البيان</label><input id="eName" required></div>
+        <div><label>القيمة</label><input type="number" step="any" id="eVal" required></div>
+        <div><button type="submit" style="width:100%">إضافة</button></div>
+      </form>
+    </div>
+
+    <div class="panel">
+      <h3>استيراد / تصدير Excel</h3>
+      <div class="row">
+        <input type="file" id="xlsFile" accept=".xlsx,.xls,.csv" style="max-width:300px">
+        <button id="importBtn">استيراد الملف</button>
+        <button class="sec" id="tplBtn">تنزيل نموذج</button>
+        <button class="sec" id="expBtn">تصدير إلى Excel</button>
+      </div>
+      <p class="note">أعمدة الملف: التاريخ | التصنيف | البيان | القيمة (أول ورقة في الملف). يُضاف المستورد إلى البيانات الحالية.</p>
+      <div class="msg" id="appMsg"></div>
+    </div>
+
+    <div class="panel">
+      <h3>الرسم البياني حسب التصنيف</h3>
+      <div class="chartbox"><canvas id="chart"></canvas></div>
+    </div>
+
+    <div class="panel">
+      <div class="row" style="justify-content:space-between;margin-bottom:10px">
+        <h3 style="margin:0">السجلات</h3>
+        <div class="row"><input id="search" placeholder="بحث..." style="width:200px">
+          <button class="danger" id="clearBtn">حذف الكل</button></div>
+      </div>
+      <div class="scroll"><table>
+        <thead><tr><th>#</th><th>التاريخ</th><th>التصنيف</th><th>البيان</th><th>القيمة</th><th></th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
