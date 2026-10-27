@@ -59,7 +59,7 @@
     <div class="panel">
       <h3>إعدادات الإحصاء (تُكتشف الأعمدة تلقائياً)</h3>
       <div class="grid">
-        <div><label>عمود القيمة (رقمي)</label><select id="valCol"></select></div>
+        <div><label>عمود القيمة (أي عمود يحوي أرقاماً)</label><select id="valCol"></select></div>
         <div><label>عمود التجميع للرسم</label><select id="grpCol"></select></div>
       </div>
     </div>
@@ -72,14 +72,15 @@
     <div class="panel">
       <h3>استيراد / تصدير Excel</h3>
       <div class="row">
-        <input type="file" id="xlsFile" accept=".xlsx,.xls,.csv" style="max-width:280px">
+        <input type="file" id="xlsFile" accept=".xlsx,.xlsm,.xlsb,.xls,.ods,.csv,.tsv,.txt" style="max-width:280px">
+        <select id="sheetSel" style="max-width:170px"><option value="0">أول ورقة</option></select>
         <select id="impMode" style="max-width:190px"><option value="append">إضافة للبيانات الحالية</option><option value="replace">استبدال البيانات</option></select>
         <label style="display:flex;gap:6px;align-items:center;margin:0;color:var(--tx)"><input type="checkbox" id="firstHdr" style="width:auto"> الصف الأول عناوين أعمدة</label>
         <button id="importBtn">استيراد الملف</button>
         <button class="sec" id="tplBtn">تنزيل نموذج</button>
         <button class="sec" id="expBtn">تصدير إلى Excel</button>
       </div>
-      <p class="note">تُستورد بيانات أول ورقة كما هي تماماً (بدون اعتبار الصف الأول عناوين)، وتُسمّى الأعمدة A, B, C... مثل Excel. فعّل خيار «الصف الأول عناوين أعمدة» إن أردت استخدام الصف الأول كأسماء أعمدة.</p>
+      <p class="note">يُقبل أي ملف جداول (xlsx, xls, ods, csv...) بأي نوع بيانات: نصوص أو أرقام أو تواريخ أو خليط. تُستورد القيم كما هي تماماً، وتُسمّى الأعمدة A, B, C... ويمكنك اختيار ورقة محددة أو كل الأوراق. فعّل «الصف الأول عناوين أعمدة» إن أردت استخدامه كأسماء للأعمدة.</p>
       <div class="msg" id="appMsg"></div>
     </div>
     <div class="panel">
