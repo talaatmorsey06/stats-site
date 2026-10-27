@@ -56,49 +56,52 @@
       <button class="sec" id="logoutBtn">خروج</button></div>
   </header>
   <div class="wrap">
+    <div class="panel">
+      <h3>إعدادات الإحصاء (تُكتشف الأعمدة تلقائياً)</h3>
+      <div class="grid">
+        <div><label>عمود القيمة (رقمي)</label><select id="valCol"></select></div>
+        <div><label>عمود التجميع للرسم</label><select id="grpCol"></select></div>
+      </div>
+    </div>
     <div class="cards">
       <div class="stat"><small>عدد السجلات</small><b id="kCount">0</b></div>
       <div class="stat"><small>المجموع</small><b id="kSum">0</b></div>
       <div class="stat"><small>المتوسط</small><b id="kAvg">0</b></div>
       <div class="stat"><small>أعلى قيمة</small><b id="kMax">0</b></div>
     </div>
-
-    <div class="panel">
-      <h3>إدخال بيانات جديدة</h3>
-      <form id="entryForm" class="grid">
-        <div><label>التاريخ</label><input type="date" id="eDate" required></div>
-        <div><label>التصنيف</label><input id="eCat" list="cats" required><datalist id="cats"></datalist></div>
-        <div><label>البيان</label><input id="eName" required></div>
-        <div><label>القيمة</label><input type="number" step="any" id="eVal" required></div>
-        <div><button type="submit" style="width:100%">إضافة</button></div>
-      </form>
-    </div>
-
     <div class="panel">
       <h3>استيراد / تصدير Excel</h3>
       <div class="row">
-        <input type="file" id="xlsFile" accept=".xlsx,.xls,.csv" style="max-width:300px">
+        <input type="file" id="xlsFile" accept=".xlsx,.xls,.csv" style="max-width:280px">
+        <select id="impMode" style="max-width:190px"><option value="append">إضافة للبيانات الحالية</option><option value="replace">استبدال البيانات</option></select>
         <button id="importBtn">استيراد الملف</button>
         <button class="sec" id="tplBtn">تنزيل نموذج</button>
         <button class="sec" id="expBtn">تصدير إلى Excel</button>
       </div>
-      <p class="note">أعمدة الملف: التاريخ | التصنيف | البيان | القيمة (أول ورقة في الملف). يُضاف المستورد إلى البيانات الحالية.</p>
+      <p class="note">لا حاجة لتحديد الأعمدة: يقرأ الموقع عناوين الصف الأول من أول ورقة في الملف ويُنشئ الأعمدة تلقائياً بأي أسماء وأي عدد.</p>
       <div class="msg" id="appMsg"></div>
     </div>
-
     <div class="panel">
-      <h3>الرسم البياني حسب التصنيف</h3>
+      <h3>الأعمدة</h3>
+      <div class="row" id="colChips"></div>
+      <div class="row" style="margin-top:10px"><input id="newCol" placeholder="اسم عمود جديد" style="max-width:220px"><button class="sec" id="addColBtn">إضافة عمود</button></div>
+    </div>
+    <div class="panel">
+      <h3>إدخال سجل جديد</h3>
+      <form id="entryForm" class="grid"></form>
+    </div>
+    <div class="panel">
+      <h3>الرسم البياني</h3>
       <div class="chartbox"><canvas id="chart"></canvas></div>
     </div>
-
     <div class="panel">
       <div class="row" style="justify-content:space-between;margin-bottom:10px">
-        <h3 style="margin:0">السجلات</h3>
+        <h3 style="margin:0">السجلات <span class="note">(اضغط على أي خلية لتعديلها)</span></h3>
         <div class="row"><input id="search" placeholder="بحث..." style="width:200px">
           <button class="danger" id="clearBtn">حذف الكل</button></div>
       </div>
       <div class="scroll"><table>
-        <thead><tr><th>#</th><th>التاريخ</th><th>التصنيف</th><th>البيان</th><th>القيمة</th><th></th></tr></thead>
+        <thead id="thead"></thead>
         <tbody id="tbody"></tbody>
       </table></div>
     </div>
