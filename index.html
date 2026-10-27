@@ -74,11 +74,12 @@
       <div class="row">
         <input type="file" id="xlsFile" accept=".xlsx,.xls,.csv" style="max-width:280px">
         <select id="impMode" style="max-width:190px"><option value="append">إضافة للبيانات الحالية</option><option value="replace">استبدال البيانات</option></select>
+        <label style="display:flex;gap:6px;align-items:center;margin:0;color:var(--tx)"><input type="checkbox" id="firstHdr" style="width:auto"> الصف الأول عناوين أعمدة</label>
         <button id="importBtn">استيراد الملف</button>
         <button class="sec" id="tplBtn">تنزيل نموذج</button>
         <button class="sec" id="expBtn">تصدير إلى Excel</button>
       </div>
-      <p class="note">لا حاجة لتحديد الأعمدة: يقرأ الموقع عناوين الصف الأول من أول ورقة في الملف ويُنشئ الأعمدة تلقائياً بأي أسماء وأي عدد.</p>
+      <p class="note">تُستورد بيانات أول ورقة كما هي تماماً (بدون اعتبار الصف الأول عناوين)، وتُسمّى الأعمدة A, B, C... مثل Excel. فعّل خيار «الصف الأول عناوين أعمدة» إن أردت استخدام الصف الأول كأسماء أعمدة.</p>
       <div class="msg" id="appMsg"></div>
     </div>
     <div class="panel">
@@ -108,8 +109,8 @@
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="lib/xlsx.full.min.js"></script>
+<script src="lib/chart.umd.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
